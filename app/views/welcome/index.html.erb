@@ -1,0 +1,33 @@
+<h1>Have you something To Do?</h1>
+<p>Enter and item below</p>
+<% if user_signed_in? %>
+<%= link_to "Log Out", destroy_user_session_path, method: :delete, class: "nav-link"%>
+<% else %>
+<br>
+<%= link_to "Log In", new_user_session_path, class: "nav-link"%>
+<%= link_to "Sign Up", new_user_registration_path, class: "nav-link"%>
+<br>
+<% end %>
+<div class="row">
+  <div class="col-md-6">
+    <h2> Your todolist </h2>
+    <hr>
+      <ol>
+    <% @todos.each do |todo| %>
+        <h3>
+            <li>
+              <%= todo.item %>
+              <small>  <%=link_to 'delete', todo, method: :delete, data: {confirm: "are you sure?"} %> </small>
+            </li>
+          </h3>
+      <% end %>
+      </ol>
+    </div>
+    <div class="col-md-6">
+      <h3> Enter To Do item here </h3>
+      <%= form_with scope: :todo, url:todos_path do |f| %>
+       <%= f.text_field :item, placeholder: "type item here" %> <br>
+       <%= f.submit "enter", class: "btn btn-primary" %>
+       <% end %>
+      </div>
+  </div>
